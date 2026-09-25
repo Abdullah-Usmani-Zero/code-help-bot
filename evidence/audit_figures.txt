@@ -1,0 +1,14 @@
+$ python evidence/audit_figures.py pilot_answer_audit.xlsx
+questions audited:            24 (2025-02-03 to 2025-03-06)
+grounded in the source file:  10
+with a fabricated detail:     14 (58%)
+cited where in the file:      5
+fabricated AND cited:         0
+engineer correction time:     235 min (16.8 min per fabrication)
+prompt tokens sent (audit):   total 287851, mean 11994, median 9410.0
+
+file                             questions fabricated cited minutes audit tokens
+notion_client/api_endpoints.py           6          4     0      70         9410
+notion_client/client.py                 11          8     2     130        18742
+notion_client/errors.py                  3          0     1       0         1975
+notion_client/helpers.py                 4          2     2      35         4826

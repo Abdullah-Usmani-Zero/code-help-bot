@@ -1,0 +1,21 @@
+# Run inside a clone of https://github.com/ramnes/notion-sdk-py
+
+$ git rev-list -n1 --before=2025-02-03T00:00:00Z origin/HEAD   # last commit before the pilot started
+1fb34b5a8096691126e719f15c2c8f6567932399
+
+$ for f in client api_endpoints helpers errors; do printf "%-14s " $f; git show 1fb34b5:notion_client/$f.py | python3 -c "import sys,tiktoken; print(len(tiktoken.get_encoding(\"cl100k_base\").encode(sys.stdin.read())))"; done
+client         1681
+api_endpoints  2613
+helpers        1026
+errors         719
+
+$ git log --format="%h %cs %s" -1 3bb5e90   # automatic retries added to client.py after the pilot
+3bb5e90 2026-03-17 Add automatic retry support with exponential backoff (#319)
+
+$ git show 1fb34b5:notion_client/client.py | grep -nE "timeout_ms|log_level"
+37:        timeout_ms: Number of milliseconds to wait before emitting a
+41:        log_level: Verbosity of logs the instance will produce. By default, logs are
+48:    timeout_ms: int = 60_000
+50:    log_level: int = logging.WARNING
+68:        self.logger.setLevel(options.log_level)
+88:        client.timeout = httpx.Timeout(timeout=self.options.timeout_ms / 1_000)
