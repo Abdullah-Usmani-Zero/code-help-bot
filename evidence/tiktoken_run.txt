@@ -1,0 +1,26 @@
+$ date -u +"%Y-%m-%dT%H:%M:%SZ"
+2026-09-25T06:15:12Z
+
+$ python3 --version
+Python 3.11.15
+
+$ python3 -c "import tiktoken; print(\"tiktoken\", tiktoken.__version__)"
+tiktoken 0.14.0
+
+$ sha256sum client.py
+95e5aa4fdfd8616d047124ac096e3be708223809f91804839a38483204e9eeb5  client.py
+
+$ wc -c -l client.py
+  513 18097 client.py
+
+$ python3 code_help_bot.py --count-only
+client.py: 18097 characters, 513 lines
+  tiktoken cl100k_base: 3940 tokens
+  tiktoken o200k_base: 3945 tokens
+  tiktoken cl100k_base, system prompt + wrapped file: 3997 tokens
+  tiktoken o200k_base, system prompt + wrapped file: 4002 tokens
+  per-question budget: 14500 Claude tokens (6500 input + 8000 output)
+
+$ python3 -c "import tiktoken; t=open(\"client.py\",encoding=\"utf-8\").read(); [print(e, len(tiktoken.get_encoding(e).encode(t))) for e in (\"cl100k_base\",\"o200k_base\")]"
+cl100k_base 3940
+o200k_base 3945
